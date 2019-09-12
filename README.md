@@ -1,7 +1,8 @@
 # PSM Image Processing :movie_camera:
 
 This repository provides some of the source code used for [insert paper here](#).
-Source images and results may be available upon contact.
+Source images and results may be available upon contact, note that they are too
+large to host on github.
 
 ---
 
@@ -18,6 +19,47 @@ Institute of Physics of Materials at Academy of Sciences of the Czech Republic
 
 Provided a video of micro pillars being loaded, this code determines the rate
 of PSM propagation, and the embryonic size of PSMs.
+
+## Analysis Variables
+The study of a given PSM band is performed based on these global variables.
+Align these parameters with your work.
+```python
+# Run specific variables
+experiment = 32  # The experiment number. Images for this experiment should be in folder {experiment}/
+band = 3  # The band to examine within the experiment
+export_gifs = True  # Whether gifs should be exported
+interactive = True  # Whether interactive parts of the script should be run.
+recompute = False  # Forces recomputation. Warning, will potentially overwrite
+                   # other variables.
+
+# Experiment specific variables. These will be overwritten
+# if the experiment has already been analyzed.
+scale = 768 / 40.27  # Pixels to um ratio.
+frequency = 75  # The frequency of loading in Hz
+direction = 2. / 3  # The slope of the PSBs in the experiment relative to the image.
+                    # Seemingly allows for margin of error.
+beam_height = 600  # In pixels
+beam_width = 180  # in pixels
+flip = True  # All PSM slopes should be positive. If the slope is negative, a
+             # reflection is performed on the picture.
+
+# Band specific variables
+start = 0  # The start offset of a given band.
+width = beam_height  # The width of the given band.
+
+# New experiment specific variables. These values will be ignored
+# unless no records exist for the given variable.
+# Image loading specific variables.
+resize = 0  # Scale factor by which the image should be resized. Set 0 for no resizing.
+borders = [50, 140, 30, 40]  # Left, Right, Top, Bottom.
+                             # Cropping margins for the processed images.
+margin_x = [20, 3]  # The margin to provide a partially cropped beam,
+                    # when determining how to crop the height
+
+# Event capture specific variables.
+time_margin = 15  # How much of the video to ignore at the beginning and end
+sigma = 0.65  # Smoothing deviation for filtering procedures
+```
 
 ## Velocity Determination
 The general procedure for velocity determination is as follows:
