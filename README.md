@@ -27,6 +27,13 @@ Alternatively, clone this repository and use `pip install .`
 
 To install updates run `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master --upgrade`.
 
+## Usage
+
+Interactively run the notebook with `jupyter notebook .`, or import needed functions from the module:
+```python
+import PSMProcessing as psm
+...
+```
 ## Analysis Variables
 The study of a given PSM band is performed based on these global variables.
 Align these parameters with your work.
