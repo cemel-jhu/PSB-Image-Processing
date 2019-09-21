@@ -20,6 +20,13 @@ Institute of Physics of Materials at Academy of Sciences of the Czech Republic
 Provided a video of micro pillars being loaded, this code determines the rate
 of PSM propagation, and the embryonic size of PSMs.
 
+## Installation
+
+Install this package via pip i.e `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master`.
+Alternatively, clone this repository and use `pip install .`
+
+To install updates run `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master --upgrade`.
+
 ## Analysis Variables
 The study of a given PSM band is performed based on these global variables.
 Align these parameters with your work.
