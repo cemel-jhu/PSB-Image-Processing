@@ -9,7 +9,7 @@ large to host on github.
 This research was sponsored by the U.S. Air Force Office of Scientific Research
 (AFOSR) under grant \# FA9550-18-1-0071. This material is based upon work
 supported by the National Science Foundation Graduate Research Fellowship under
-Grant No. 2017245441. The authors recognize Dr. Craig Johnson at Drexel
+Grant DGE-1746891. The authors recognize Dr. Craig Johnson at Drexel
 University for his help with transmission electron microscopy. The authors also
 appreciate insightful discussions with Professor H¨ael Mughrabi of
 Erlangen-N¨urnberg University in Germany and Professor Jaroslav Pol´ak of the
@@ -19,6 +19,32 @@ Institute of Physics of Materials at Academy of Sciences of the Czech Republic
 
 Provided a video of micro pillars being loaded, this code determines the rate
 of PSM propagation, and the embryonic size of PSMs.
+
+## Installation
+
+Install this package via pip i.e `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master`.
+Alternatively, clone this repository and use `pip install .`
+
+To install updates run `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master --upgrade`.
+
+## Usage
+
+Interactively run the notebook with `jupyter notebook .`, or import needed functions from the module:
+```python
+import PSMProcessing as psm
+...
+```
+
+To run bulk studies, implement the `parameter_study.py` script provided. Its usage is as follows:
+
+```text
+usage: parameter_study.py [-h] [--study STUDY] --parameter PARAMETER N [N ...]
+parameter_study.py: The following arguments are required: N, --parameter
+```
+
+For example: `python parameter_study.py --study=sigma_variation
+--parameter=sigma 0.35 0.65 1` runs a parameter study on the filtering
+hyperparameter `sigma`. For other parameters see below.
 
 ## Analysis Variables
 The study of a given PSM band is performed based on these global variables.
