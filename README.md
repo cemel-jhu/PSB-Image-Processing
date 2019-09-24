@@ -34,6 +34,18 @@ Interactively run the notebook with `jupyter notebook .`, or import needed funct
 import PSMProcessing as psm
 ...
 ```
+
+To run bulk studies, implement the `parameter_study.py` script provided. Its usage is as follows:
+
+```text
+usage: parameter_study.py [-h] [--study STUDY] --parameter PARAMETER N [N ...]
+parameter_study.py: The following arguments are required: N, --parameter
+```
+
+For example: `python parameter_study.py --study=sigma_variation
+--parameter=sigma 0.35 0.65 1` runs a parameter study on the filtering
+hyperparameter `sigma`. For other parameters see below.
+
 ## Analysis Variables
 The study of a given PSM band is performed based on these global variables.
 Align these parameters with your work.
