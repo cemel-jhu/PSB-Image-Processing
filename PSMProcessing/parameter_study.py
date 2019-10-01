@@ -134,20 +134,27 @@ def run_study(study_name,
                                   upper=band.upper,
                                   right=False)
             # Extract embryo data
-            embryo = nb.embryo(np.array([lin, hull]), lower=2.5, upper=16)
+            embryo = nb.embryo(np.array([lin, hull]), lower=2.5, upper=16,
+                    plot=False)
             csv[row, :] = [
-                index, experiment, supports, rectangularity, line.slope,
-                line.intercept, line.rvalue
-            ] + list(embyro)
+                index,
+                experiment,
+                supports,
+                rectangularity,
+                line.slope,
+                line.intercept,
+                line.rvalue,
+                line.pvalue,
+            ] + list(embryo)
             row += 1
         except Exception as e:
-            print(("Could not extract data for "
-                   "band {} in experiment {}: {}.").format(
-                       index, experiment, e),
-                  file=sys.stderr)
+            print(
+                ("Could not extract data for "
+                 "band {} in experiment {}: {}.").format(index, experiment, e),
+                file=sys.stderr)
     np.savetxt(
         "csv/result_{}_{}.csv".format(experiment, study_name),
-        np.array(csv).T,
+        np.array(csv),
         delimiter=",",
         header=("band, experiment, hull.supports, hull.rect, line.slope, "
                 "line.intercept, line.rvalue, line.pvalue, embryo.start, "
