@@ -125,7 +125,7 @@ def run_study(study_name,
         # profiles to figure out the crops.
         try:
             # Extract clean profile data
-            convex_hull = geomtery.convex_hull(filtered)
+            convex_hull = geometry.convex_hull(filtered)
             supports, rectangularity = geometry.score_profile(convex_hull)
             # Extract velocity data.
             line = nb.fit_segment(np.array([lin, hull]),
@@ -143,7 +143,7 @@ def run_study(study_name,
         except Exception as e:
             print(("Could not extract data for "
                    "band {} in experiment {}: {}.").format(
-                       index, experiment, e.message),
+                       index, experiment, e),
                   file=sys.stderr)
     np.savetxt(
         "csv/result_{}_{}.csv".format(experiment, study_name),
