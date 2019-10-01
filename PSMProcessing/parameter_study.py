@@ -1,5 +1,6 @@
 import import_ipynb
 import PSM_Processing as nb
+import geometry
 import numpy as np
 import argparse
 import sys
@@ -58,6 +59,8 @@ def run_study(study_name,
                            lins=lins,
                            flip=flip)
     cube = np.array(list(cube.values()))
+    # We do some basic filtering on the cube
+    cube = nb.clean(cube)
 
     # Extract events
     if parameter in set(["sigma", "time_margin"]):
@@ -72,6 +75,8 @@ def run_study(study_name,
                            time_margin=time_margin)
 
     # Run individual band parts
+    csv = np.zeros([len(bands), 13])
+    row = 0
     for (index, band) in bands.items():
         # We can't extract velocity data in a segment where crop is not defined.
         if band.lower == band.upper:
@@ -89,13 +94,12 @@ def run_study(study_name,
         # within an entire PSB.
         XY = np.mean(scaled, axis=0)
         raw = np.mean(unscaled, axis=0)
-        convex_hull, convex_hull_raw = nb.extract_convexhull(
-            images,
-            points,
-            points_raw,
-            indices,
-            beam_width=beam_width,
-            time_margin=time_margin)
+        hull, hull_raw = nb.extract_hull(images,
+                                         points,
+                                         points_raw,
+                                         indices,
+                                         beam_width=beam_width,
+                                         time_margin=time_margin)
         # Probably allow for name as well.
         nb.export_profiles(images,
                            scaled,
@@ -109,26 +113,47 @@ def run_study(study_name,
                            time_margin=time_margin,
                            study_name=load_ext)
 
+        # Extract clean hull data
+        filtered = cleaned_hull(lin, hull)
+        np.savetxt(
+            "csv/hull_{}_band_{}_{}.csv".format(experiment, band, study_name),
+            np.array(filtered).T,
+            delimiter=",",
+        )
+
         # Should probably do a if upper > lower. But we'll have to look at the
         # profiles to figure out the crops.
         try:
-            print("Data for band {} in experiment {}.".format(
-                index, experiment))
-            print(
-                nb.fit_segment(np.array([lin, convex_hull]),
-                               plot=False,
-                               lower=band.lower,
-                               upper=band.upper,
-                               right=False))
-            print(
-                """{2:.2f} micrometer long embyro spanning from position {0:.2f} to {1:.2f},
-    correlated to Gaussian noise with an r^2 of {4:.3f}""".format(*nb.embryo(
-                    np.array([lin, convex_hull]), lower=2.5, upper=16.5)))
-        except:
-            print(
-                "Could not extract data for band {} in experiment {}.".format(
-                    index, experiment),
-                file=sys.stderr)
+            print()
+            format(index, experiment)
+            # Extract clean profile data
+            convex_hull = geomtery.convex_hull(filtered)
+            supports, rectangularity = score_profile(convex_hull)
+            # Extract velocity data.
+            line = nb.fit_segment(np.array([lin, hull]),
+                                  plot=False,
+                                  lower=band.lower,
+                                  upper=band.upper,
+                                  right=False)
+            # Extract embryo data
+            embryo = nb.embryo(np.array([lin, hull]), lower=2.5, upper=16)
+            csv[row, :] = [
+                index, experiment, supports, rectangularity, line.slope,
+                line.intercept, line.rvalue
+            ] + list(embyro)
+            row += 1
+        except Exception as e:
+            print(("Could not extract data for "
+                   "band {} in experiment {}: {}.").format(
+                       index, experiment, e.message),
+                  file=sys.stderr)
+    np.savetxt(
+        "csv/result_{}_{}.csv".format(experiment, study_name),
+        np.array(csv).T,
+        delimiter=",",
+        header=("band, experiment, hull.supports, hull.rect, line.slope, "
+                "line.intercept, line.rvalue, line.pvalue, embryo.start, "
+                "embryo.end, embryo.length, embryo.std, embryo.rvalue"))
 
 
 def run(study_name, parameter, parameters):
