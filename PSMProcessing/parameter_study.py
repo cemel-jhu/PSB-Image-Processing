@@ -114,7 +114,7 @@ def run_study(study_name,
                            study_name=load_ext)
 
         # Extract clean hull data
-        filtered = cleaned_hull(lin, hull)
+        filtered = nb.cleaned_hull(lin, hull)
         np.savetxt(
             "csv/hull_{}_band_{}_{}.csv".format(experiment, band, study_name),
             np.array(filtered).T,
@@ -124,11 +124,9 @@ def run_study(study_name,
         # Should probably do a if upper > lower. But we'll have to look at the
         # profiles to figure out the crops.
         try:
-            print()
-            format(index, experiment)
             # Extract clean profile data
             convex_hull = geomtery.convex_hull(filtered)
-            supports, rectangularity = score_profile(convex_hull)
+            supports, rectangularity = geometry.score_profile(convex_hull)
             # Extract velocity data.
             line = nb.fit_segment(np.array([lin, hull]),
                                   plot=False,
