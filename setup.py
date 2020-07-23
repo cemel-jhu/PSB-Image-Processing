@@ -9,16 +9,18 @@ install_reqs = parse_requirements("requirements.txt", session=False)
 reqs = [str(ir.req) for ir in install_reqs]
 
 setup(
-    name='PSMProcessing',
+    name='PSBProcessing',
     version='1.0.0',
     packages=[
-        'PSMProcessing'
+        'PSBProcessing'
     ],
-    url='https://github.com/cemel-jhu/PSM-Image-Processing',
+    url='https://github.com/cemel-jhu/PSB-Image-Processing',
     license='MIT',
     author='Dylan Madisetti',
     author_email='madisetti@jhu.edu',
-    description=('Methods for determining PSM propagation speed and emybro '
+    download_url =
+    'https://github.com/cemel-jhu/PSB-Image-Processing/archive/v1.0.0.tar.gz',
+    description=('Methods for determining PSB propagation speed and emybro '
         'width in micro-pillar loading experiments.'),
     install_requires=reqs
 )

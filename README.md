@@ -1,4 +1,4 @@
-# PSM Image Processing :movie_camera:
+# PSB Image Processing :movie_camera:
 
 This repository provides some of the source code used for [insert paper here](#).
 Source images and results may be available upon contact, note that they are too
@@ -18,20 +18,20 @@ Institute of Physics of Materials at Academy of Sciences of the Czech Republic
 ---
 
 Provided a video of micro pillars being loaded, this code determines the rate
-of PSM propagation, and the embryonic size of PSMs.
+of PSB propagation, and the embryonic size of PSBs.
 
 ## Installation
 
-Install this package via pip i.e `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master`.
+Install this package via pip i.e `pip install git+git://github.com/cemel-jhu/PSB-Image-Processing@master`.
 Alternatively, clone this repository and use `pip install .`
 
-To install updates run `pip install git+git://github.com/cemel-jhu/PSM-Image-Processing@master --upgrade`.
+To install updates run `pip install git+git://github.com/cemel-jhu/PSB-Image-Processing@master --upgrade`.
 
 ## Usage
 
 Interactively run the notebook with `jupyter notebook .`, or import needed functions from the module:
 ```python
-import PSMProcessing as psm
+import PSBProcessing as psm
 ...
 ```
 
@@ -47,7 +47,7 @@ For example: `python parameter_study.py --study=sigma_variation
 hyperparameter `sigma`. For other parameters see below.
 
 ## Analysis Variables
-The study of a given PSM band is performed based on these global variables.
+The study of a given PSB band is performed based on these global variables.
 Align these parameters with your work.
 ```python
 # Run specific variables
@@ -66,7 +66,7 @@ direction = 2. / 3  # The slope of the PSBs in the experiment relative to the im
                     # Seemingly allows for margin of error.
 beam_height = 600  # In pixels
 beam_width = 180  # in pixels
-flip = True  # All PSM slopes should be positive. If the slope is negative, a
+flip = True  # All PSB slopes should be positive. If the slope is negative, a
              # reflection is performed on the picture.
 
 # Band specific variables

@@ -1,5 +1,5 @@
 import import_ipynb
-import PSM_Processing as nb
+import PSB_Processing as nb
 import geometry
 import numpy as np
 import argparse
