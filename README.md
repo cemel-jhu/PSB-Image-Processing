@@ -5,8 +5,8 @@
 
 This repository provides some of the source code used for [insert paper
 here](#).  Source images and results may be available upon contact or in
-[craedl repository](https://craedl.org/project/3999350), as they are too
-large to host on github.
+the provided [craedl repository](https://craedl.org/project/3999350), as
+they are too large to host on github.
 
 ---
 
